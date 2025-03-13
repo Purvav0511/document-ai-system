@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, BackgroundTasks
+from apscheduler.schedulers.background import BackgroundScheduler
 from pydantic import BaseModel
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
@@ -8,7 +9,6 @@ import os
 from langchain_chroma import Chroma
 from langchain_openai import OpenAIEmbeddings
 from ingest_docs import ingest_all_documents
-from contextlib import asynccontextmanager
 
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
@@ -20,14 +20,23 @@ def check_chroma_db_exists(db_path="./chroma_db"):
 
 app = FastAPI()
 
-@app.on_event("startup")
-async def startup_event():
-    if INGEST_ON_STARTUP and not check_chroma_db_exists():
-        print("Starting ingestion process...")
-        ingest_all_documents()  # This will process PDF, CSV, etc. files in ./data
-        print("Ingestion complete.")
+INGEST_MODE = os.getenv("INGEST_MODE", "none").lower()
+
+scheduler = BackgroundScheduler()
+
+if INGEST_MODE in ["scheduled", "both"]:
+    # Schedule the ingestion function to run every 10 minutes
+    scheduler.add_job(ingest_all_documents, 'interval', minutes=180)
+    scheduler.start()
+    print("Scheduled ingestion is enabled.")
+
+@app.post("/ingest")
+async def ingest_documents(background_tasks: BackgroundTasks):
+    if INGEST_MODE in ["manual", "both"]:
+        background_tasks.add_task(ingest_all_documents)
+        return {"status": "Manual ingestion started"}
     else:
-        print("Skipping ingestion as ChromaDB already exists or ingestion disabled.")
+        return {"status": "Manual ingestion is disabled in the current configuration"}
 
 
 embeddings = OpenAIEmbeddings(api_key=OPENAI_API_KEY)
@@ -70,3 +79,13 @@ async def query_document(query_request: QueryRequest):
             "context": context
         }
     }
+
+
+@app.on_event("shutdown")
+def shutdown_event():
+    scheduler.shutdown()
+
+
+@app.get("/health")
+async def health_check():
+    return {"status": "OK"}
