@@ -86,19 +86,19 @@ Integrate conversation memory to support multi-turn dialogues, enabling the syst
 # User Interface Enhancements:
 Develop a web UI (using Streamlit, React, etc.) that allows users to:
 
-# Upload documents.
-# Trigger ingestion.
-# Interact with the Q&A system through a friendly dashboard.
-# Automated Delta Ingestion:
+ Upload documents.
+ Trigger ingestion.
+ Interact with the Q&A system through a friendly dashboard.
+ Automated Delta Ingestion:
 Enhance the ingestion pipeline to automatically process only new or updated files based on a record system.
 
 # LangFlow Integration:
 Once the core features are stable, use LangFlow for visual prototyping and further prompt tuning.
 
-##License
+## License
 This project is licensed under the MIT License.
 
-##Acknowledgments
+## Acknowledgments
 LangChain: For providing powerful LLM chaining abstractions.
 ChromaDB: For efficient vector storage and similarity search.
 FastAPI: For building the backend API.
