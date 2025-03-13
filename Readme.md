@@ -67,32 +67,32 @@ If enabled, you can trigger ingestion manually by calling the /ingest endpoint o
   uvicorn app:app --reload
 ```
 
-##Access the Interactive API Docs
+## Access the Interactive API Docs
 Open http://127.0.0.1:8000/docs in your browser to test the /query endpoint.
 
-##Submit a Query
+## Submit a Query
 Example queries:
 
 "What are the main skills and experiences listed in the resume?"
 "Summarize the crime trends from the CSV data."
 "What are the key compliance points in the EU policy document?"
 ##Future Enhancements
-#Caching and Query Optimization:
+# Caching and Query Optimization:
 Implement persistent caching (e.g., using Redis) to store query results and reduce duplicate API calls.
 
-#Dynamic Q&A with Memory:
+# Dynamic Q&A with Memory:
 Integrate conversation memory to support multi-turn dialogues, enabling the system to retain context across queries.
 
-#User Interface Enhancements:
+# User Interface Enhancements:
 Develop a web UI (using Streamlit, React, etc.) that allows users to:
 
-#Upload documents.
-Trigger ingestion.
-#Interact with the Q&A system through a friendly dashboard.
-#Automated Delta Ingestion:
+# Upload documents.
+# Trigger ingestion.
+# Interact with the Q&A system through a friendly dashboard.
+# Automated Delta Ingestion:
 Enhance the ingestion pipeline to automatically process only new or updated files based on a record system.
 
-#LangFlow Integration:
+# LangFlow Integration:
 Once the core features are stable, use LangFlow for visual prototyping and further prompt tuning.
 
 ##License
