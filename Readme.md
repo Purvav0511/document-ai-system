@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a LangChain-powered multi-agent system designed to ingest and process various types of documents—PDFs, CSVs, JSONs, and DOCXs—and answer user queries based on the extracted content. The system stores document embeddings in ChromaDB (a vector database) and uses a unified query endpoint to retrieve relevant document chunks and generate answers via an LLM (e.g., GPT-4).
+This project is a LangChain-powered multi-agent system designed to ingest and process various types of documents—PDFs, CSVs, JSONs, and DOCXs—and answer user queries based on the extracted content. The system stores document embeddings in ChromaDB (a vector database) and uses a unified query endpoint to retrieve relevant document chunks and generate answers via an LLM (e.g., GPT-4o for illustrative purposes).
 
 This repository is intended for demonstration and illustrative purposes. It is built and deployed locally, with future plans to add caching, a user-friendly UI, and conversation memory for multi-turn Q&A.
 
